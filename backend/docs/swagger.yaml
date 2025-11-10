@@ -1,0 +1,276 @@
+basePath: /api/v1
+definitions:
+  domain.Attendance:
+    properties:
+      check_in:
+        type: string
+      check_out:
+        type: string
+      created_at:
+        type: string
+      date:
+        description: Memastikan unik per employee per hari
+        type: string
+      employee_id:
+        type: integer
+      id:
+        type: integer
+      status:
+        description: PRESENT, ABSENT, LEAVE
+        type: string
+    type: object
+  domain.Employee:
+    properties:
+      allowance:
+        type: number
+      base_salary:
+        type: number
+      created_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      position:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  domain.Payroll:
+    properties:
+      absence_deduction:
+        type: number
+      allowance:
+        type: number
+      base_salary:
+        type: number
+      employee_id:
+        type: integer
+      generated_at:
+        type: string
+      id:
+        type: integer
+      period:
+        description: Biasanya awal bulan
+        type: string
+      take_home_pay:
+        type: number
+      total_absent:
+        type: integer
+    type: object
+  handler.GeneratePayrollRequest:
+    properties:
+      employee_id:
+        type: integer
+      period:
+        description: expect YYYY-MM-DD (start of month)
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Backend Technical Test (Golang + PostgreSQL)
+  title: Mini HR & Payroll System API
+  version: "1.0"
+paths:
+  /attendances:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Attendance object
+        in: body
+        name: attendance
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Attendance'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Attendance'
+      summary: Record daily attendance
+  /employees:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Employee'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: List all employees
+      tags:
+      - Employees
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Employee object
+        in: body
+        name: employee
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Employee'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Employee'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create a new employee
+      tags:
+      - Employees
+  /employees/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Employee ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Employee'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get employee by ID
+      tags:
+      - Employees
+  /payroll/generate:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Payroll request
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/handler.GeneratePayrollRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Payroll'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Generate monthly payroll for an employee
+      tags:
+      - Payroll
+  /payroll/slips:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Payroll'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: List payroll slips
+      tags:
+      - Payroll
+  /payroll/slips/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Payroll ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Payroll'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get payroll detail by ID
+      tags:
+      - Payroll
+schemes:
+- http
+swagger: "2.0"
