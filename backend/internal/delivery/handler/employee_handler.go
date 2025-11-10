@@ -97,3 +97,42 @@ func (h *EmployeeHandler) GetAllEmployees(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, employees)
 }
+
+// UpdateEmployee handles PUT /employees/:id
+// @Summary Update an existing employee
+// @Tags Employees
+// @Accept json
+// @Produce json
+// @Param id path int true "Employee ID"
+// @Param employee body domain.Employee true "Employee object"
+// @Success 200 {object} domain.Employee
+// @Failure 400 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /employees/{id} [put]
+func (h *EmployeeHandler) UpdateEmployee(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := strconv.ParseUint(idStr, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format"})
+		return
+	}
+
+	var req domain.Employee
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request format"})
+		return
+	}
+
+	updatedEmployee, err := h.Service.UpdateEmployee(uint(id), &req)
+	if err != nil {
+		if err.Error() == "record not found" {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Employee not found"})
+			return
+		}
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update employee"})
+		return
+	}
+
+	c.JSON(http.StatusOK, updatedEmployee)
+}

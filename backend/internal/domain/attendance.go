@@ -16,6 +16,7 @@ type Attendance struct {
 // AttendanceRepository mendefinisikan kontrak operasi data (Port)
 type AttendanceRepository interface {
 	Save(att *Attendance) error
+	Update(att *Attendance) error
 	FindByEmployeeAndDate(employeeID uint, date time.Time) (*Attendance, error)
 	FindByPeriod(employeeID uint, dateFrom time.Time, dateTo time.Time) ([]Attendance, error)
 }
@@ -23,5 +24,6 @@ type AttendanceRepository interface {
 // AttendanceService mendefinisikan kontrak Use Case
 type AttendanceService interface {
 	RecordAttendance(att *Attendance) (*Attendance, error)
+	RecordCheckout(employeeID uint, checkOutTime time.Time) (*Attendance, error)
 	GetAttendanceByPeriod(employeeID uint, dateFrom time.Time, dateTo time.Time) ([]Attendance, error)
 }

@@ -15,6 +15,7 @@ build: ## Build the backend binary (linux/amd64, static)
 
 run: ## Run the app locally (uses local Go toolchain)
 	@echo "==> Running app"
+	@mkdir -p .tmp
 	go run ./cmd
 
 fmt: ## Run go fmt on project

@@ -12,6 +12,7 @@ import (
 	"hr-payroll/internal/repository"
 	"hr-payroll/internal/service"
 
+	"github.com/gin-gonic/gin"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
@@ -82,12 +83,17 @@ func main() {
 	payrollHandler := handler.NewPayrollHandler(payrollService)
 
 	// 5. SETUP ROUTER (Memetakan Handler ke URL)
+	router := gin.New()
+	// Add Logger and Recovery middleware
+	router.Use(gin.Logger())
+	router.Use(gin.Recovery())
+
 	routerConfig := http.RouterConfig{
 		EmployeeHandler:   employeeHandler,
 		AttendanceHandler: attendanceHandler,
 		PayrollHandler:    payrollHandler,
 	}
-	router := http.SetupRouter(routerConfig)
+	http.SetupRouter(router, routerConfig)
 
 	// 6. MENJALANKAN SERVER
 	log.Println("Server running on port :8080. Swagger URL: http://localhost:8080/swagger/index.html")

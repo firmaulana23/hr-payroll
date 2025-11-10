@@ -1,0 +1,54 @@
+==> Running app
+go run ./cmd
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (4 handlers)
+[GIN-debug] POST   /api/v1/employees         --> hr-payroll/internal/delivery/handler.(*EmployeeHandler).CreateEmployee-fm (4 handlers)
+[GIN-debug] GET    /api/v1/employees         --> hr-payroll/internal/delivery/handler.(*EmployeeHandler).GetAllEmployees-fm (4 handlers)
+[GIN-debug] GET    /api/v1/employees/:id     --> hr-payroll/internal/delivery/handler.(*EmployeeHandler).GetEmployeeByID-fm (4 handlers)
+[GIN-debug] PUT    /api/v1/employees/:id     --> hr-payroll/internal/delivery/handler.(*EmployeeHandler).UpdateEmployee-fm (4 handlers)
+[GIN-debug] POST   /api/v1/attendances       --> hr-payroll/internal/delivery/handler.(*AttendanceHandler).RecordAttendance-fm (4 handlers)
+[GIN-debug] PUT    /api/v1/attendances/checkout --> hr-payroll/internal/delivery/handler.(*AttendanceHandler).RecordCheckout-fm (4 handlers)
+[GIN-debug] GET    /api/v1/attendances       --> hr-payroll/internal/delivery/handler.(*AttendanceHandler).GetAttendanceByPeriod-fm (4 handlers)
+[GIN-debug] POST   /api/v1/payroll/generate  --> hr-payroll/internal/delivery/handler.(*PayrollHandler).GeneratePayroll-fm (4 handlers)
+[GIN-debug] GET    /api/v1/payroll/slips     --> hr-payroll/internal/delivery/handler.(*PayrollHandler).GetPayrollSlips-fm (4 handlers)
+[GIN-debug] GET    /api/v1/payroll/slips/:id --> hr-payroll/internal/delivery/handler.(*PayrollHandler).GetPayrollDetail-fm (4 handlers)
+2025/11/10 17:42:33 Server running on port :8080. Swagger URL: http://localhost:8080/swagger/index.html
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://github.com/gin-gonic/gin/blob/master/docs/doc.md#dont-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8080
+
+2025/11/10 17:42:37 [32m/Users/fmaulana/Documents/hr-payroll/backend/internal/repository/employee_repo.go:38 [33mSLOW SQL >= 200ms
+[0m[31;1m[215.856ms] [33m[rows:0][35m SELECT * FROM "employees"[0m
+[GIN] 2025/11/10 - 17:42:37 | 200 |  216.142657ms |             ::1 | GET      "/api/v1/employees"
+
+2025/11/10 17:42:37 [32m/Users/fmaulana/Documents/hr-payroll/backend/internal/repository/payroll_repo.go:42 [33mSLOW SQL >= 200ms
+[0m[31;1m[294.688ms] [33m[rows:0][35m SELECT * FROM "payrolls"[0m
+[GIN] 2025/11/10 - 17:42:37 | 200 |  294.944064ms |             ::1 | GET      "/api/v1/payroll/slips"
+[GIN] 2025/11/10 - 17:42:47 | 204 |      11.013µs |             ::1 | OPTIONS  "/api/v1/employees"
+[GIN] 2025/11/10 - 17:42:47 | 201 |    3.069433ms |             ::1 | POST     "/api/v1/employees"
+[GIN] 2025/11/10 - 17:42:47 | 200 |     691.935µs |             ::1 | GET      "/api/v1/employees"
+[GIN] 2025/11/10 - 17:42:55 | 204 |       10.49µs |             ::1 | OPTIONS  "/api/v1/attendances"
+
+2025/11/10 17:42:55 [31;1m/Users/fmaulana/Documents/hr-payroll/backend/internal/repository/attendance_repo.go:34 [35;1mrecord not found
+[0m[33m[22.302ms] [34;1m[rows:0][0m SELECT * FROM "attendances" WHERE employee_id = 3 AND date = '2025-11-10 00:00:00' ORDER BY "attendances"."id" LIMIT 1
+[GIN] 2025/11/10 - 17:42:55 | 201 |   41.871462ms |             ::1 | POST     "/api/v1/attendances"
+[GIN] 2025/11/10 - 17:42:59 | 200 |     976.268µs |             ::1 | GET      "/api/v1/attendances?employee_id=3&from=2025-11-10&to=2025-11-10"
+[GIN] 2025/11/10 - 17:43:03 | 204 |       9.409µs |             ::1 | OPTIONS  "/api/v1/attendances/checkout"
+[GIN] 2025/11/10 - 17:43:03 | 200 |    4.284002ms |             ::1 | PUT      "/api/v1/attendances/checkout"
+[GIN] 2025/11/10 - 17:43:05 | 200 |     2.00279ms |             ::1 | GET      "/api/v1/attendances?employee_id=3&from=2025-11-10&to=2025-11-10"
+[GIN] 2025/11/10 - 17:43:26 | 204 |      14.066µs |             ::1 | OPTIONS  "/api/v1/attendances"
+[GIN] 2025/11/10 - 17:43:26 | 409 |     695.316µs |             ::1 | POST     "/api/v1/attendances"
+[GIN] 2025/11/10 - 17:43:29 | 204 |      10.119µs |             ::1 | OPTIONS  "/api/v1/attendances"
+[GIN] 2025/11/10 - 17:43:29 | 409 |    1.753447ms |             ::1 | POST     "/api/v1/attendances"
+[GIN] 2025/11/10 - 17:43:32 | 200 |    1.449588ms |             ::1 | GET      "/api/v1/attendances?employee_id=3&from=2025-11-10&to=2025-11-10"
+[GIN] 2025/11/10 - 17:43:45 | 200 |     312.228µs |             ::1 | GET      "/swagger/index.html"
+[GIN] 2025/11/10 - 17:43:45 | 200 |     726.536µs |             ::1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2025/11/10 - 17:43:45 | 200 |      48.526µs |             ::1 | GET      "/swagger/index.css"
+[GIN] 2025/11/10 - 17:43:45 | 200 |     405.022µs |             ::1 | GET      "/swagger/swagger-initializer.js"
+[GIN] 2025/11/10 - 17:43:45 | 200 |     417.471µs |             ::1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2025/11/10 - 17:43:45 | 200 |   17.355676ms |             ::1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2025/11/10 - 17:43:45 | 200 |     494.376µs |             ::1 | GET      "/swagger/doc.json"
+[GIN] 2025/11/10 - 17:43:45 | 200 |      49.527µs |             ::1 | GET      "/swagger/favicon-32x32.png"

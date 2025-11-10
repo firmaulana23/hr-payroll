@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HR Payroll - Employees</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="container">
+    <h1>HR Payroll — Dashboard</h1>
+
+    <nav class="tabs">
+      <button data-view="employees" class="active">Employees</button>
+      <button data-view="attendance">Attendance</button>
+      <button data-view="payroll">Payroll</button>
+    </nav>
+
+    <!-- Employees view -->
+    <section id="view-employees" class="card view">
+      <h2>Add Employee</h2>
+      <form id="employeeForm">
+        <input type="hidden" id="employee_id" name="employee_id" />
+        <label>
+          Name
+          <input type="text" id="name" name="name" required />
+        </label>
+        <label>
+          Base Salary
+          <input type="number" id="base_salary" name="base_salary" step="0.01" required />
+        </label>
+        <label>
+          Allowance
+          <input type="number" id="allowance" name="allowance" step="0.01" required />
+        </label>
+        <label>
+          Position
+          <input type="text" id="position" name="position" required />
+        </label>
+        <div class="actions">
+          <button type="submit">Create</button>
+          <button type="button" id="refreshBtn">Refresh</button>
+        </div>
+      </form>
+      <div id="formMessage" class="message" role="status"></div>
+
+      <h3 style="margin-top:16px">Employee List</h3>
+      <table id="employeesTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Base Salary</th>
+            <th>Allowance</th>
+            <th>Created At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div id="listMessage" class="message" role="status"></div>
+    </section>
+
+    <!-- Attendance view -->
+    <section id="view-attendance" class="card view" style="display:none">
+      <h2>Record Attendance</h2>
+      <form id="attendanceForm">
+        <label>
+          Employee
+          <select id="attendance_employee" required>
+            <option value="">-- Select employee --</option>
+          </select>
+        </label>
+        <div class="actions">
+          <button type="button" id="checkinBtn">Check-in</button>
+          <button type="button" id="checkoutBtn">Check-out</button>
+          <button type="button" id="absentBtn">Mark Absent</button>
+          <button type="button" id="leaveBtn">Mark on Leave</button>
+        </div>
+      </form>
+      <div id="attendanceMessage" class="message" role="status"></div>
+
+      <hr style="margin: 24px 0;" />
+
+      <h2>Attendance History</h2>
+      <form id="attendanceHistoryForm">
+        <label>
+          Employee
+          <select id="attendance_history_employee" required>
+            <option value="">-- Select employee --</option>
+          </select>
+        </label>
+        <label>
+          From
+          <input type="date" id="attendance_from" required />
+        </label>
+        <label>
+          To
+          <input type="date" id="attendance_to" required />
+        </label>
+        <div class="actions">
+          <button type="submit">Search</button>
+        </div>
+      </form>
+      <div id="attendanceHistoryMessage" class="message" role="status"></div>
+      <table id="attendanceHistoryTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Check In</th>
+            <th>Check Out</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- Payroll view -->
+    <section id="view-payroll" class="card view" style="display:none">
+      <h2>Payroll</h2>
+      <form id="payrollForm">
+        <label>
+          Employee
+          <select id="payroll_employee">
+            <option value="">-- Select employee --</option>
+          </select>
+        </label>
+        <label>
+          Period (YYYY-MM-DD)
+          <input type="month" id="payroll_period" />
+        </label>
+        <div class="actions">
+          <button type="submit">Generate Payroll</button>
+          <button type="button" id="refreshPayroll">Refresh Slips</button>
+        </div>
+      </form>
+      <div id="payrollMessage" class="message" role="status"></div>
+
+      <h3 style="margin-top:16px">Payroll Slips</h3>
+      <table id="payrollTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Employee ID</th>
+            <th>Period</th>
+            <th>Take Home Pay</th>
+            <th>Generated At</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div id="payrollListMessage" class="message" role="status"></div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

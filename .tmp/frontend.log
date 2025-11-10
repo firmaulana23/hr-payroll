@@ -1,0 +1,5 @@
+::ffff:127.0.0.1 - - [10/Nov/2025 17:42:36] "GET / HTTP/1.1" 200 -
+::1 - - [10/Nov/2025 17:42:36] code 404, message File not found
+::1 - - [10/Nov/2025 17:42:36] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+::1 - - [10/Nov/2025 17:42:36] "GET /styles.css HTTP/1.1" 200 -
+::1 - - [10/Nov/2025 17:42:36] "GET /app.js HTTP/1.1" 200 -

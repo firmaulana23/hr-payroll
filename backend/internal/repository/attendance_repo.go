@@ -22,6 +22,11 @@ func (r *AttendanceGormRepository) Save(att *domain.Attendance) error {
 	return r.DB.Create(att).Error
 }
 
+// Update implements domain.AttendanceRepository.
+func (r *AttendanceGormRepository) Update(att *domain.Attendance) error {
+	return r.DB.Model(att).Updates(att).Error
+}
+
 // FindByEmployeeAndDate implements domain.AttendanceRepository.
 func (r *AttendanceGormRepository) FindByEmployeeAndDate(employeeID uint, date time.Time) (*domain.Attendance, error) {
 	var attendance domain.Attendance
