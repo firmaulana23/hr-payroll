@@ -55,3 +55,7 @@ status: ## Show running PIDs (if any)
 
 open: ## Open frontend in default browser (macOS)
 	@open http://localhost:3000
+
+docs: ## Generate swagger docs (requires swag installed)
+	@echo "==> Generating Swagger docs"
+	swag init -g ./backend/cmd/main.go -o ./docs

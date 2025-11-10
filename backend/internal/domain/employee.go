@@ -4,11 +4,11 @@ import "time"
 
 // Employee adalah entitas bisnis inti
 type Employee struct {
-	ID         uint      `json:"id" gorm:"primaryKey"`
-	Name       string    `json:"name"`
-	BaseSalary float64   `json:"base_salary"`
-	Allowance  float64   `json:"allowance"`
-	Position   string    `json:"position"`
+	ID         uint      `json:"id" gorm:"primaryKey" example:"1"`
+	Name       string    `json:"name" example:"John Doe"`
+	BaseSalary float64   `json:"base_salary" example:"50000"`
+	Allowance  float64   `json:"allowance" example:"5000"`
+	Position   string    `json:"position" example:"Software Engineer"`
 	CreatedAt  time.Time `json:"created_at"`
 	UpdatedAt  time.Time `json:"updated_at"`
 }

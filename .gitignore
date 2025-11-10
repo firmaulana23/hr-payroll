@@ -2,7 +2,10 @@
 # https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
 #
 
-.tmp/
+# Ignore temporary files
+**/.tmp
+
+*.log
 # Binaries for programs and plugins
 *.exe
 *.exe~

@@ -4,12 +4,12 @@ import "time"
 
 // Attendance adalah entitas bisnis inti untuk kehadiran harian
 type Attendance struct {
-	ID         uint       `json:"id" gorm:"primaryKey"`
-	EmployeeID uint       `json:"employee_id"`
-	Date       time.Time  `json:"date" gorm:"uniqueIndex:idx_employee_date"` // Memastikan unik per employee per hari
-	Status     string     `json:"status"`                                    // PRESENT, ABSENT, LEAVE
-	CheckIn    *time.Time `json:"check_in"`
-	CheckOut   *time.Time `json:"check_out"`
+	ID         uint       `json:"id" gorm:"primaryKey" example:"1"`
+	EmployeeID uint       `json:"employee_id" example:"1"`
+	Date       time.Time  `json:"date" gorm:"uniqueIndex:idx_employee_date" example:"2025-11-10T00:00:00Z"` // Memastikan unik per employee per hari
+	Status     string     `json:"status" example:"PRESENT"`                                    // PRESENT, ABSENT, LEAVE
+	CheckIn    *time.Time `json:"check_in" example:"2025-11-10T09:00:00Z"`
+	CheckOut   *time.Time `json:"check_out" example:"2025-11-10T17:00:00Z"`
 	CreatedAt  time.Time  `json:"created_at"`
 }
 
