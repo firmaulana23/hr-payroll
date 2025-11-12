@@ -16,12 +16,79 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/attendances": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Attendances"
+                ],
+                "summary": "Get attendance records by period for an employee",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Employee ID",
+                        "name": "employee_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "From date (YYYY-MM-DD)",
+                        "name": "from",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "To date (YYYY-MM-DD)",
+                        "name": "to",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/domain.Attendance"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Attendances"
                 ],
                 "summary": "Record daily attendance",
                 "parameters": [
@@ -52,6 +119,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Attendances"
                 ],
                 "summary": "Record checkout for an employee",
                 "parameters": [
@@ -421,27 +491,33 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "check_in": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "2025-11-10T09:00:00Z"
                 },
                 "check_out": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "2025-11-10T17:00:00Z"
                 },
                 "created_at": {
                     "type": "string"
                 },
                 "date": {
                     "description": "Memastikan unik per employee per hari",
-                    "type": "string"
+                    "type": "string",
+                    "example": "2025-11-10T00:00:00Z"
                 },
                 "employee_id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 1
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 1
                 },
                 "status": {
                     "description": "PRESENT, ABSENT, LEAVE",
-                    "type": "string"
+                    "type": "string",
+                    "example": "PRESENT"
                 }
             }
         },
@@ -449,22 +525,27 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "allowance": {
-                    "type": "number"
+                    "type": "number",
+                    "example": 5000
                 },
                 "base_salary": {
-                    "type": "number"
+                    "type": "number",
+                    "example": 50000
                 },
                 "created_at": {
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 1
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "John Doe"
                 },
                 "position": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "Software Engineer"
                 },
                 "updated_at": {
                     "type": "string"
@@ -475,32 +556,40 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "absence_deduction": {
-                    "type": "number"
+                    "type": "number",
+                    "example": 1000
                 },
                 "allowance": {
-                    "type": "number"
+                    "type": "number",
+                    "example": 5000
                 },
                 "base_salary": {
-                    "type": "number"
+                    "type": "number",
+                    "example": 50000
                 },
                 "employee_id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 1
                 },
                 "generated_at": {
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 1
                 },
                 "period": {
                     "description": "Biasanya awal bulan",
-                    "type": "string"
+                    "type": "string",
+                    "example": "2025-11-01T00:00:00Z"
                 },
                 "take_home_pay": {
-                    "type": "number"
+                    "type": "number",
+                    "example": 54000
                 },
                 "total_absent": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 2
                 }
             }
         },

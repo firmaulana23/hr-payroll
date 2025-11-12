@@ -19,6 +19,7 @@ func NewAttendanceHandler(s domain.AttendanceService) *AttendanceHandler {
 
 // RecordAttendance handles POST /attendances
 // @Summary Record daily attendance
+// @Tags Attendances
 // @Accept json
 // @Produce json
 // @Param attendance body domain.Attendance true "Attendance object"
@@ -45,6 +46,7 @@ func (h *AttendanceHandler) RecordAttendance(c *gin.Context) {
 
 // RecordCheckout handles PUT /attendances/checkout
 // @Summary Record checkout for an employee
+// @Tags Attendances
 // @Accept json
 // @Produce json
 // @Param checkout body domain.Attendance true "Checkout object"

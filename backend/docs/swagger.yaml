@@ -3,35 +3,46 @@ definitions:
   domain.Attendance:
     properties:
       check_in:
+        example: "2025-11-10T09:00:00Z"
         type: string
       check_out:
+        example: "2025-11-10T17:00:00Z"
         type: string
       created_at:
         type: string
       date:
         description: Memastikan unik per employee per hari
+        example: "2025-11-10T00:00:00Z"
         type: string
       employee_id:
+        example: 1
         type: integer
       id:
+        example: 1
         type: integer
       status:
         description: PRESENT, ABSENT, LEAVE
+        example: PRESENT
         type: string
     type: object
   domain.Employee:
     properties:
       allowance:
+        example: 5000
         type: number
       base_salary:
+        example: 50000
         type: number
       created_at:
         type: string
       id:
+        example: 1
         type: integer
       name:
+        example: John Doe
         type: string
       position:
+        example: Software Engineer
         type: string
       updated_at:
         type: string
@@ -39,23 +50,31 @@ definitions:
   domain.Payroll:
     properties:
       absence_deduction:
+        example: 1000
         type: number
       allowance:
+        example: 5000
         type: number
       base_salary:
+        example: 50000
         type: number
       employee_id:
+        example: 1
         type: integer
       generated_at:
         type: string
       id:
+        example: 1
         type: integer
       period:
         description: Biasanya awal bulan
+        example: "2025-11-01T00:00:00Z"
         type: string
       take_home_pay:
+        example: 54000
         type: number
       total_absent:
+        example: 2
         type: integer
     type: object
   handler.GeneratePayrollRequest:
@@ -74,6 +93,49 @@ info:
   version: "1.0"
 paths:
   /attendances:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Employee ID
+        in: query
+        name: employee_id
+        required: true
+        type: integer
+      - description: From date (YYYY-MM-DD)
+        in: query
+        name: from
+        required: true
+        type: string
+      - description: To date (YYYY-MM-DD)
+        in: query
+        name: to
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Attendance'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get attendance records by period for an employee
+      tags:
+      - Attendances
     post:
       consumes:
       - application/json
@@ -92,6 +154,8 @@ paths:
           schema:
             $ref: '#/definitions/domain.Attendance'
       summary: Record daily attendance
+      tags:
+      - Attendances
   /attendances/checkout:
     put:
       consumes:
@@ -111,6 +175,8 @@ paths:
           schema:
             $ref: '#/definitions/domain.Attendance'
       summary: Record checkout for an employee
+      tags:
+      - Attendances
   /employees:
     get:
       consumes:
